@@ -1,3 +1,52 @@
 <resources>
-    <string name="app_name">BakeIt</string>
+    <string name="app_name">BakeIT</string>
+
+    <string name="progress_message">Baking recipes…</string>
+
+    <string name="format_ingredient">%1$s of %2$s</string>
+
+    <string name="unreachable_service">Newer recipes cannot be retrieved at the moment. Showing local recipes.</string>
+
+    <string name="no_data">BakeIT has no recipes! Newer recipes cannot be retrieved and no local recipes were found.</string>
+
+    <!-- PLURALS -->
+    <plurals name="unit">
+        <item quantity="one">%1$d unit</item>
+        <item quantity="other">%1$d units</item>
+    </plurals>
+
+    <plurals name="oz">
+        <item quantity="one">%1$d ounce</item>
+        <item quantity="other">%1$d ounces</item>
+    </plurals>
+
+    <plurals name="k">
+        <item quantity="one">%1$d kilogram</item>
+        <item quantity="other">%1$d kilograms</item>
+    </plurals>
+
+    <plurals name="g">
+        <item quantity="one">%1$d gram</item>
+        <item quantity="other">%1$d grams</item>
+    </plurals>
+
+    <plurals name="cup">
+        <item quantity="one">%1$d cup</item>
+        <item quantity="other">%1$d cups</item>
+    </plurals>
+
+    <plurals name="tblsp">
+        <item quantity="one">%1$d table spoon</item>
+        <item quantity="other">%1$d table spoons</item>
+    </plurals>
+
+    <plurals name="tsp">
+        <item quantity="one">%1$d tea spoon</item>
+        <item quantity="other">%1$d tea spoons</item>
+    </plurals>
+
+    <plurals name="serving">
+        <item quantity="one">%1$d serving</item>
+        <item quantity="other">%1$d servings</item>
+    </plurals>
 </resources>
