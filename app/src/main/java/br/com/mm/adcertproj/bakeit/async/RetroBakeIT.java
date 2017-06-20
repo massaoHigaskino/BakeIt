@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import timber.log.Timber;
 
 import static br.com.mm.adcertproj.bakeit.provider.BakeITContentProvider.buildRecipeContentUri;
@@ -43,7 +44,7 @@ public class RetroBakeIT {
                 .build();
 
         API api = retrofit.create(API.class);
-        Observable<Recipe[]> recipes = api.getRecipes();
+        Observable<Recipe[]> recipes = api.getRecipes(BakeITPreferences.BAKE_IT_PATH);
 
         recipes.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -132,8 +133,8 @@ public class RetroBakeIT {
      * Describes an remote RESTful API to Retrofit.
      */
     public interface API {
-        @GET
-        Observable<Recipe[]> getRecipes();
+        @GET("{file}")
+        Observable<Recipe[]> getRecipes(@Path("file") String filePath);
     }
 
     /**

@@ -5,9 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import br.com.mm.adcertproj.bakeit.R;
 import br.com.mm.adcertproj.bakeit.model.Recipe;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
     // region ATTRIBUTES
@@ -58,14 +62,18 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     }
 
     // TODO implementation pending
-    public class RecipesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecipesViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
+
+        @BindView(R.id.tv_recipe_name) TextView mRecipeNameTextView;
+
         public RecipesViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
+            //itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
+        @OnClick(R.id.cv_recipe)
+        public void onClick(/*View v*/) {
             int adapterPosition = getAdapterPosition();
             if(mClickListener != null && mRecipes != null
                     && mRecipes.length > adapterPosition && adapterPosition >= 0) {
@@ -73,7 +81,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
             }
         }
 
-        public void bind(Recipe recipe) {}
+        public void bind(Recipe recipe) {
+            mRecipeNameTextView.setText(recipe.getName());
+        }
     }
     // endregion AUXILIARY CLASSES
 }
