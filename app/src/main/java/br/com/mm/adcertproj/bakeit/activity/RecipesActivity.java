@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
 
+import br.com.mm.adcertproj.bakeit.BuildConfig;
 import br.com.mm.adcertproj.bakeit.R;
 import br.com.mm.adcertproj.bakeit.adapter.RecipesAdapter;
 import br.com.mm.adcertproj.bakeit.async.RetroBakeIT;
@@ -23,7 +24,6 @@ public class RecipesActivity extends AppCompatActivity
         implements RecipesAdapter.RecipesClickListener, RetroBakeIT.AsyncListener {
 
     //region ATTRIBUTES
-    public static final String EXTRA_RECIPE_KEY = "br.com.mm.adcertproj.bakeit.recipe";
     @BindView(R.id.tv_error) TextView mErrorTextView;
     @BindView(R.id.rv_recipes) RecyclerView mRecipesRecyclerView;
     private RecipesAdapter mRecipesAdapter;
@@ -61,7 +61,7 @@ public class RecipesActivity extends AppCompatActivity
     @Override
     public void onRecipesClick(Recipe recipe) {
         Intent intent = new Intent(this, BakeITActivity.class);
-        intent.putExtra(EXTRA_RECIPE_KEY, recipe);
+        intent.putExtra(BuildConfig.EXTRA_RECIPE_KEY, recipe);
         startActivity(intent);
     }
 

@@ -68,8 +68,12 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="value_text_view" parent="general_text_view">
+    <style name="heading_text_view" parent="general_text_view">
         <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="value_text_view" parent="general_text_view">
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="label_text_view" parent="general_text_view">
@@ -81,8 +85,12 @@
         <item name="android:textColor">@android:color/holo_red_dark</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
-    <style name="cardview_text_view" parent="value_text_view">
+
+    <style name="cardview_heading_text_view" parent="heading_text_view">
+        <item name="android:colorBackground">@color/cardviewTextBg</item>
+    </style>
+
+    <style name="cardview_value_text_view" parent="value_text_view">
         <item name="android:colorBackground">@color/cardviewTextBg</item>
     </style>
 
