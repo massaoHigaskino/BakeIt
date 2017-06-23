@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 // TODO implementation pending
-public class StepsFragment extends Fragment {
+public class StepsFragment extends Fragment implements StepsAdapter.StepClickListener {
     // region ATTRIBUTES
     @BindView(R.id.tv_recipe_name) TextView mRecipeNameTextView;
     @BindView(R.id.tv_recipe_details) TextView mRecipeDetailsTextView;
@@ -58,6 +58,9 @@ public class StepsFragment extends Fragment {
                 Timber.e(t, "Invalid object stored with '%1$s' key. Object of type %2$s expected.",
                         BuildConfig.EXTRA_RECIPE_KEY, Recipe.class.getName());
             }
+        } else if(savedInstanceState != null) {
+            recipe = (Recipe) savedInstanceState.getSerializable(BuildConfig.EXTRA_RECIPE_KEY);
+            savedInstanceState.clear();
         }
 
         if(recipe != null) {
@@ -76,7 +79,22 @@ public class StepsFragment extends Fragment {
         mIngredientsRecyclerView.setHasFixedSize(true);
         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
 
+        mStepsAdapter = new StepsAdapter(getContext(), this, recipe);
+
+        layoutManager = new LinearLayoutManager(
+                getContext(), LinearLayoutManager.VERTICAL, false);
+
+        mStepsRecyclerView.setLayoutManager(layoutManager);
+        mStepsRecyclerView.setHasFixedSize(true);
+        mStepsRecyclerView.setAdapter(mStepsAdapter);
+
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(BuildConfig.EXTRA_RECIPE_KEY, recipe);
     }
 
     /**
@@ -94,6 +112,11 @@ public class StepsFragment extends Fragment {
             Timber.e(e, "Fragment attached to non callable context. Implement %1$s in order to" +
                     " receive callbacks from this fragment.", OnRecipeStepClickedListener.class.getName());
         }
+    }
+
+    @Override
+    public void onStepClick(Step step) {
+        mCallback.onRecipeStepClicked(step);
     }
 
     public interface OnRecipeStepClickedListener {

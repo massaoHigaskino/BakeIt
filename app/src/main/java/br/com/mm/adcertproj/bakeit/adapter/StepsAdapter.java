@@ -5,9 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import br.com.mm.adcertproj.bakeit.R;
+import br.com.mm.adcertproj.bakeit.model.Recipe;
 import br.com.mm.adcertproj.bakeit.model.Step;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
     // region ATTRIBUTES
@@ -16,9 +21,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     private Step[] mSteps;
     // endregion ATTRIBUTES
 
-    public StepsAdapter(Context context, StepClickListener listener) {
+    public StepsAdapter(Context context, StepClickListener listener, Recipe recipe) {
         mContext = context;
         mClickListener = listener;
+        mSteps = recipe.getSteps().toArray(new Step[recipe.getSteps().size()]);
     }
 
     // region PUBLIC METHODS
@@ -58,13 +64,15 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     }
 
     // TODO implementation pending
-    public class StepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class StepsViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_step) TextView mStepTextView;
+
         public StepsViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
-        @Override
+        @OnClick(R.id.ll_step)
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             if(mClickListener != null && mSteps != null
@@ -73,7 +81,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             }
         }
 
-        public void bind(Step step) {}
+        public void bind(Step step) {
+            mStepTextView.setText(step.getShortDescription());
+        }
     }
     // endregion AUXILIARY CLASSES
 }

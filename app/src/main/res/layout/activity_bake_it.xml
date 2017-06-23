@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="br.com.mm.adcertproj.bakeit.activity.BakeITActivity">
-    <fragment
+    <FrameLayout
         android:id="@+id/frag_steps"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="br.com.mm.adcertproj.bakeit.fragment.StepsFragment"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

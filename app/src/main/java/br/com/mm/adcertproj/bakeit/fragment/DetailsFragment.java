@@ -8,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.mm.adcertproj.bakeit.R;
+import br.com.mm.adcertproj.bakeit.model.Step;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
 // TODO implementation pending
 public class DetailsFragment extends Fragment {
+    private Step mRecipeStep;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the fragment
      */
@@ -27,5 +30,9 @@ public class DetailsFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         return rootView;
+    }
+
+    public void bind(Step step) {
+
     }
 }
