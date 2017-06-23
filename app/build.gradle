@@ -16,6 +16,7 @@ android {
             buildConfigField 'String', 'EXTRA_RECIPE_KEY', '"br.com.mm.adcertproj.bakeit.recipe"'
             buildConfigField 'String', 'EXTRA_STEP_KEY', '"br.com.mm.adcertproj.bakeit.step"'
             buildConfigField 'String', 'EXTRA_FRAG_STEP_KEY', '"br.com.mm.adcertproj.bakeit.fragment.step"'
+            buildConfigField 'String', 'EXO_PLAYER_USER_AGENT', '"br.com.mm.adcertproj.bakeit.useragent"'
         }
         release {
             minifyEnabled false

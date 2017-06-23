@@ -9,6 +9,8 @@
 
     <string name="no_data">BakeIT has no recipes! Newer recipes cannot be retrieved and no local recipes were found.</string>
     <string name="servings_text">for %1$s</string>
+    <string name="next">Next Step</string>
+    <string name="prev">Previous Step</string>
 
     <!-- PLURALS -->
     <plurals name="unit">

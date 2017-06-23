@@ -112,6 +112,8 @@ public class StepsFragment extends Fragment implements StepsAdapter.StepClickLis
             Timber.e(e, "Fragment attached to non callable context. Implement %1$s in order to" +
                     " receive callbacks from this fragment.", OnRecipeStepClickedListener.class.getName());
         }
+
+        Timber.d("Fragment attached.");
     }
 
     @Override
