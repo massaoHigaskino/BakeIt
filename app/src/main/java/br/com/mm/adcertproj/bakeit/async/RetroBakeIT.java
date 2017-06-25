@@ -9,7 +9,10 @@ import java.util.concurrent.Callable;
 
 import br.com.mm.adcertproj.bakeit.R;
 import br.com.mm.adcertproj.bakeit.helpers.AsyncTaskHelper;
+import br.com.mm.adcertproj.bakeit.helpers.BakeITDeserializer;
+import br.com.mm.adcertproj.bakeit.model.Ingredient;
 import br.com.mm.adcertproj.bakeit.model.Recipe;
+import br.com.mm.adcertproj.bakeit.model.Step;
 import br.com.mm.adcertproj.bakeit.preferences.BakeITPreferences;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -24,7 +27,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import timber.log.Timber;
 
+import static br.com.mm.adcertproj.bakeit.provider.BakeITContentProvider.buildIngredientContentUri;
 import static br.com.mm.adcertproj.bakeit.provider.BakeITContentProvider.buildRecipeContentUri;
+import static br.com.mm.adcertproj.bakeit.provider.BakeITContentProvider.buildStepContentUri;
 
 public class RetroBakeIT {
 
@@ -40,6 +45,7 @@ public class RetroBakeIT {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()
+                        .registerTypeAdapter(Recipe[].class, new BakeITDeserializer())
                         .create()))
                 .build();
 
@@ -70,6 +76,7 @@ public class RetroBakeIT {
                     @Override
                     public void onComplete() {
                         Timber.d("Succesful recipes.json retrieval.");
+                        persistRecipesAsync(context, recipes);
                         AsyncTaskHelper.dismissProgressDialog();
                         listener.onTaskResult(recipes);
                     }
@@ -126,6 +133,42 @@ public class RetroBakeIT {
                         listener.onTaskResult(recipes);
                     }
                 });
+    }
+
+    public static void persistRecipesAsync(final Context context, final Recipe[] newRecipes) {
+        Observable observable = Observable.fromCallable(new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Timber.d("Deleting old recipes...");
+
+                context.getContentResolver().delete(buildIngredientContentUri(), null, null);
+                context.getContentResolver().delete(buildStepContentUri(), null, null);
+                context.getContentResolver().delete(buildRecipeContentUri(), null, null);
+
+                Timber.d("Deletion completed.");
+                Timber.d("Persisting new recipes...");
+
+                for(Recipe recipe : newRecipes){
+                    context.getContentResolver()
+                            .insert(buildRecipeContentUri(), recipe.createContentValues());
+                    for(Ingredient ingredient : recipe.getIngredients()) {
+                        context.getContentResolver()
+                                .insert(buildIngredientContentUri(), ingredient.createContentValues());
+                    }
+                    for(Step step : recipe.getSteps()) {
+                        context.getContentResolver()
+                                .insert(buildStepContentUri(), step.createContentValues());
+                    }
+                }
+
+                Timber.d("Persistence completed.");
+
+                return true;
+            }
+        });
+
+        observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe();
     }
 
     // region AUXILIARY CLASSES

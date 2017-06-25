@@ -60,6 +60,10 @@ public class RecipesActivity extends AppCompatActivity
     //region PUBLIC METHODS
     @Override
     public void onRecipesClick(Recipe recipe) {
+        // This preference will be used by a widget in order to get the current recipe's ingredients
+        getSharedPreferences(BuildConfig.PREFERENCE_FILE_KEY, MODE_PRIVATE).edit()
+                .putInt(BuildConfig.SHARED_RECIPE_KEY, recipe.getId()).apply();
+
         Intent intent = new Intent(this, BakeITActivity.class);
         intent.putExtra(BuildConfig.EXTRA_RECIPE_KEY, recipe);
         startActivity(intent);

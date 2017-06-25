@@ -25,7 +25,7 @@ public class Recipe extends AbstractModel implements Serializable {
     // region PK
     @SerializedName(Contract.JSON_ID)
     @Expose
-    @DatabaseField(allowGeneratedIdInsert = true)
+    @DatabaseField(id = true)
     private Integer id;
     // endregion PK
 
@@ -132,6 +132,7 @@ public class Recipe extends AbstractModel implements Serializable {
         Recipe[] resultArray = new Recipe[cursor.getCount()];
 
         for(int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
             Recipe recipe = new Recipe();
             recipe.setId(cursor.getInt(cursor.getColumnIndex(Contract.COLUMN_ID)));
             recipe.setName(cursor.getString(cursor.getColumnIndex(Contract.COLUMN_NAME)));
@@ -164,7 +165,7 @@ public class Recipe extends AbstractModel implements Serializable {
      */
     public class Contract {
         public static final String TABLE_NAME = "recipes";
-        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_SERVINGS = "servings";
         public static final String COLUMN_IMAGE = "image";

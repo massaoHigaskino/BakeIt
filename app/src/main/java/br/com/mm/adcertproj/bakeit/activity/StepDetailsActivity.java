@@ -51,8 +51,9 @@ public class StepDetailsActivity extends AppCompatActivity implements DetailsFra
     @Override
     public void onClickNext() {
         if(hasNextStep()) {
+            final int index = mCurrentRecipe.getSteps().indexOf(mCurrentStep) + 1;
             mCurrentStep = mCurrentRecipe.getSteps()
-                    .get(mCurrentRecipe.getSteps().indexOf(mCurrentStep) + 1);
+                    .get(index);
             mDetailsFragment.bind(mCurrentStep);
         }
     }
@@ -60,8 +61,9 @@ public class StepDetailsActivity extends AppCompatActivity implements DetailsFra
     @Override
     public void onClickPrev() {
         if(hasPrevStep()) {
+            final int index = mCurrentRecipe.getSteps().indexOf(mCurrentStep) - 1;
             mCurrentStep = mCurrentRecipe.getSteps()
-                    .get(mCurrentRecipe.getSteps().indexOf(mCurrentStep) - 1);
+                    .get(index);
             mDetailsFragment.bind(mCurrentStep);
         }
     }

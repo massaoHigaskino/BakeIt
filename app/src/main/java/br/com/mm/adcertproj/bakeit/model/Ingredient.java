@@ -10,6 +10,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
+import timber.log.Timber;
+
 @DatabaseTable(tableName = Ingredient.Contract.TABLE_NAME)
 public class Ingredient extends AbstractModel implements Serializable {
 
@@ -111,12 +113,33 @@ public class Ingredient extends AbstractModel implements Serializable {
         Ingredient[] resultArray = new Ingredient[cursor.getCount()];
 
         for(int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
             Ingredient ingredient = new Ingredient();
-            ingredient.setId(cursor.getInt(cursor.getColumnIndex(Contract.COLUMN_ID)));
-            ingredient.setRecipeId(cursor.getInt(cursor.getColumnIndex(Contract.COLUMN_RECIPE_ID)));
-            ingredient.setIngredient(cursor.getString(cursor.getColumnIndex(Contract.COLUMN_INGREDIENT)));
-            ingredient.setMeasure(cursor.getString(cursor.getColumnIndex(Contract.COLUMN_MEASURE)));
-            ingredient.setQuantity(cursor.getFloat(cursor.getColumnIndex(Contract.COLUMN_QUANTITY)));
+            int columnIndex = cursor.getColumnIndex(Contract.COLUMN_ID);
+            if(columnIndex >= 0)
+                ingredient.setId(cursor.getInt(columnIndex));
+            else
+                Timber.e("Invalid cursor index!");
+            columnIndex = cursor.getColumnIndex(Contract.COLUMN_RECIPE_ID);
+            if(columnIndex >= 0)
+                ingredient.setRecipeId(cursor.getInt(columnIndex));
+            else
+                Timber.e("Invalid cursor index!");
+            columnIndex = cursor.getColumnIndex(Contract.COLUMN_INGREDIENT);
+            if(columnIndex >= 0)
+                ingredient.setIngredient(cursor.getString(columnIndex));
+            else
+                Timber.e("Invalid cursor index!");
+            columnIndex = cursor.getColumnIndex(Contract.COLUMN_MEASURE);
+            if(columnIndex >= 0)
+                ingredient.setMeasure(cursor.getString(columnIndex));
+            else
+                Timber.e("Invalid cursor index!");
+            columnIndex = cursor.getColumnIndex(Contract.COLUMN_QUANTITY);
+            if(columnIndex >= 0)
+                ingredient.setQuantity(cursor.getFloat(columnIndex));
+            else
+                Timber.e("Invalid cursor index!");
             resultArray[i] = ingredient;
         }
 

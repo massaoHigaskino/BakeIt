@@ -5,9 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 import br.com.mm.adcertproj.bakeit.R;
+import br.com.mm.adcertproj.bakeit.helpers.StringHelper;
 import br.com.mm.adcertproj.bakeit.model.Recipe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +70,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     public class RecipesViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
         @BindView(R.id.tv_recipe_name) TextView mRecipeNameTextView;
+        @BindView(R.id.iv_recipe) ImageView mRecipeImageView;
 
         public RecipesViewHolder(View itemView) {
             super(itemView);
@@ -83,6 +89,21 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
         public void bind(Recipe recipe) {
             mRecipeNameTextView.setText(recipe.getName());
+            if(StringHelper.isNullOrEmpty(recipe.getImage())){
+                mRecipeImageView.setVisibility(View.GONE);
+            } else {
+                Picasso.with(mContext).load(recipe.getImage()).into(mRecipeImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        mRecipeImageView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        mRecipeImageView.setVisibility(View.GONE);
+                    }
+                });
+            }
         }
     }
     // endregion AUXILIARY CLASSES

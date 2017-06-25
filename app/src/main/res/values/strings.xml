@@ -12,6 +12,9 @@
     <string name="next">Next Step</string>
     <string name="prev">Previous Step</string>
 
+    <string name="appwidget_text">Choose your recipe in our app!</string>
+    <string name="add_widget">Add widget</string>
+
     <!-- PLURALS -->
     <plurals name="unit">
         <item quantity="one">%1$s unit</item>

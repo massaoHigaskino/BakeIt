@@ -20,12 +20,11 @@
             android:layout_height="wrap_content">
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                 android:id="@+id/baked_exo_player"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                style="@style/bakeit_media"/>
             <ImageView
                 android:id="@+id/iv_step"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                style="@style/bakeit_media"/>
         </FrameLayout>
     </android.support.v7.widget.CardView>
 
@@ -46,21 +45,11 @@
                 <Button
                     android:id="@+id/button_prev"
                     android:text="@string/prev"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
-                    android:layout_margin="6dp"
-                    android:layout_marginEnd="3dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_weight="0.5"/>
+                    style="@style/bakeit_button"/>
                 <Button
                     android:id="@+id/button_next"
                     android:text="@string/next"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
-                    android:layout_margin="6dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="0.5"/>
+                    style="@style/bakeit_button"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

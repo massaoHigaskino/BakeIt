@@ -19,7 +19,7 @@ public class Step extends AbstractModel implements Serializable {
     // region PK
     @SerializedName(Contract.JSON_ID)
     @Expose
-    @DatabaseField(allowGeneratedIdInsert = true)
+    @DatabaseField
     private Integer id; // TODO id may be 0, could be incompatible to SQLite _id
     // endregion PK
 
@@ -127,6 +127,7 @@ public class Step extends AbstractModel implements Serializable {
         Step[] resultArray = new Step[cursor.getCount()];
 
         for(int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
             Step step = new Step();
             step.setId(cursor.getInt(cursor.getColumnIndex(Contract.COLUMN_ID)));
             step.setRecipeId(cursor.getInt(cursor.getColumnIndex(Contract.COLUMN_RECIPE_ID)));
@@ -141,6 +142,15 @@ public class Step extends AbstractModel implements Serializable {
 
         return resultArray;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Step))
+            return false;
+        Step other = (Step) obj;
+        return this.getId().equals(other.getId()) && this.getRecipeId().equals(other.getRecipeId());
+    }
+
     // endregion PUBLIC METHODS
 
     // region NESTED CLASSES
@@ -149,8 +159,8 @@ public class Step extends AbstractModel implements Serializable {
      * Json element names and table/column names should be the same to avoid confusion.
      */
     public class Contract {
-        public static final String TABLE_NAME = "ingredients";
-        public static final String COLUMN_ID = "_id";
+        public static final String TABLE_NAME = "steps";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_RECIPE_ID = "recipeId";
         public static final String COLUMN_SHORT_DESC = "shortDescription";
         public static final String COLUMN_DESCRIPTION = "description";

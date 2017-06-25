@@ -94,4 +94,19 @@
         <item name="android:colorBackground">@color/cardviewTextBg</item>
     </style>
 
+    <style name="bakeit_media">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/media_height</item>
+    </style>
+
+    <style name="bakeit_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:background">@drawable/bakeit_button</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

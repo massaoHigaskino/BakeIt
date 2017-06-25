@@ -48,6 +48,7 @@ public class DetailsFragment extends Fragment {
     @BindView(R.id.button_prev) Button mPrevButton;
 
     private SimpleExoPlayer mExoPlayer;
+    private MediaSource mediaSource;
     private OnClickListener callback;
     private Step mRecipeStep;
     //endregion ATTRIBUTES
@@ -91,6 +92,13 @@ public class DetailsFragment extends Fragment {
     public void bind(final Step step) {
         Timber.d("Binding new step.");
 
+        // Stops current media reproduction
+        if(mExoPlayer != null)
+            mExoPlayer.stop();
+        if(mediaSource != null)
+            mediaSource.releaseSource();
+
+        // Binds new data to this fragment's views
         mStepTextView.setText(step.getShortDescription());
         if(StringHelper.isNullOrEmpty(step.getVideoURL())
                 && StringHelper.isNullOrEmpty(step.getThumbnailURL())) {
@@ -124,6 +132,8 @@ public class DetailsFragment extends Fragment {
         if(callback!=null) {
             mNextButton.setEnabled(callback.hasNextStep());
             mPrevButton.setEnabled(callback.hasPrevStep());
+            mNextButton.setVisibility(callback.hasNextStep() ? View.VISIBLE : View.INVISIBLE);
+            mPrevButton.setVisibility(callback.hasPrevStep() ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
@@ -155,7 +165,7 @@ public class DetailsFragment extends Fragment {
 
         // Prepare the MediaSource.
         String userAgent = Util.getUserAgent(getContext(), BuildConfig.EXO_PLAYER_USER_AGENT);
-        MediaSource mediaSource = new ExtractorMediaSource(mediaUri,
+        mediaSource = new ExtractorMediaSource(mediaUri,
                 new DefaultDataSourceFactory(getContext(), userAgent),
                 new DefaultExtractorsFactory(), null, null);
         mExoPlayer.prepare(mediaSource);
