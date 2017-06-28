@@ -1,3 +1,62 @@
 <resources>
-    <string name="app_name">BakeIt</string>
+    <string name="app_name">BakeIT</string>
+
+    <string name="progress_message">Baking recipes…</string>
+
+    <string name="format_ingredient">%1$s of %2$s</string>
+
+    <string name="unreachable_service">Newer recipes cannot be retrieved at the moment. Showing local recipes.</string>
+
+    <string name="no_data">BakeIT has no recipes! Newer recipes cannot be retrieved and no local recipes were found.</string>
+    <string name="servings_text">for %1$s</string>
+    <string name="next">Next Step</string>
+    <string name="prev">Previous Step</string>
+
+    <string name="appwidget_text">Choose your recipe in our app!</string>
+    <string name="add_widget">Add widget</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="recipe_illustration">Recipe illustration</string>
+    <string name="step_description">Step description</string>
+
+    <!-- PLURALS -->
+    <plurals name="unit">
+        <item quantity="one">%1$s unit</item>
+        <item quantity="other">%1$s units</item>
+    </plurals>
+
+    <plurals name="oz">
+        <item quantity="one">%1$s ounce</item>
+        <item quantity="other">%1$s ounces</item>
+    </plurals>
+
+    <plurals name="k">
+        <item quantity="one">%1$s kilogram</item>
+        <item quantity="other">%1$s kilograms</item>
+    </plurals>
+
+    <plurals name="g">
+        <item quantity="one">%1$s gram</item>
+        <item quantity="other">%1$s grams</item>
+    </plurals>
+
+    <plurals name="cup">
+        <item quantity="one">%1$s cup</item>
+        <item quantity="other">%1$s cups</item>
+    </plurals>
+
+    <plurals name="tblsp">
+        <item quantity="one">%1$s table spoon</item>
+        <item quantity="other">%1$s table spoons</item>
+    </plurals>
+
+    <plurals name="tsp">
+        <item quantity="one">%1$s tea spoon</item>
+        <item quantity="other">%1$s tea spoons</item>
+    </plurals>
+
+    <plurals name="serving">
+        <item quantity="one">%1$d serving</item>
+        <item quantity="other">%1$d servings</item>
+    </plurals>
 </resources>
