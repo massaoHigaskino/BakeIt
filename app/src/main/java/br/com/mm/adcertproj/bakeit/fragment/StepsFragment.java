@@ -22,15 +22,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-// TODO implementation pending
 public class StepsFragment extends Fragment implements StepsAdapter.StepClickListener {
     // region ATTRIBUTES
     @BindView(R.id.tv_recipe_name) TextView mRecipeNameTextView;
     @BindView(R.id.tv_recipe_details) TextView mRecipeDetailsTextView;
     @BindView(R.id.rv_ingredients) RecyclerView mIngredientsRecyclerView;
     @BindView(R.id.rv_steps) RecyclerView mStepsRecyclerView;
-    private IngredientsAdapter mIngredientsAdapter;
-    private StepsAdapter mStepsAdapter;
     private OnRecipeStepClickedListener mCallback;
     private Recipe recipe;
     // endregion ATTRIBUTES
@@ -70,7 +67,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.StepClickLis
             mRecipeDetailsTextView.setText(getString(R.string.servings_text, servingsPluralized));
         }
 
-        mIngredientsAdapter = new IngredientsAdapter(getContext(), recipe);
+        IngredientsAdapter mIngredientsAdapter = new IngredientsAdapter(getContext(), recipe);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false);
@@ -79,7 +76,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.StepClickLis
         mIngredientsRecyclerView.setHasFixedSize(true);
         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
 
-        mStepsAdapter = new StepsAdapter(getContext(), this, recipe);
+        StepsAdapter mStepsAdapter = new StepsAdapter(this, recipe);
 
         layoutManager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false);
@@ -100,7 +97,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.StepClickLis
     /**
      * Receives the context in which this fragment is attached, useful for callbacks this fragment
      * may need to do.
-     * @param context
+     * @param context Activity which impements this fragments callbacks.
      */
     @Override
     public void onAttach(Context context) {

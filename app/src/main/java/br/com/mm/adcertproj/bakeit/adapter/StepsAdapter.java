@@ -16,26 +16,16 @@ import butterknife.OnClick;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
     // region ATTRIBUTES
-    private final Context mContext;
     private final StepClickListener mClickListener;
     private Step[] mSteps;
     // endregion ATTRIBUTES
 
-    public StepsAdapter(Context context, StepClickListener listener, Recipe recipe) {
-        mContext = context;
+    public StepsAdapter(StepClickListener listener, Recipe recipe) {
         mClickListener = listener;
         mSteps = recipe.getSteps().toArray(new Step[recipe.getSteps().size()]);
     }
 
     // region PUBLIC METHODS
-    public void setSteps(Step[] steps) {
-        mSteps = steps;
-        notifyDataSetChanged();
-    }
-
-    public Step[] getSteps() {
-        return mSteps;
-    }
 
     @Override
     public StepsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,17 +53,16 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         void onStepClick(Step step);
     }
 
-    // TODO implementation pending
-    public class StepsViewHolder extends RecyclerView.ViewHolder {
+    class StepsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_step) TextView mStepTextView;
 
-        public StepsViewHolder(View itemView) {
+        StepsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         @OnClick(R.id.ll_step)
-        public void onClick(View v) {
+        void onClick() {
             int adapterPosition = getAdapterPosition();
             if(mClickListener != null && mSteps != null
                     && mSteps.length > adapterPosition && adapterPosition >= 0) {
@@ -81,7 +70,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             }
         }
 
-        public void bind(Step step) {
+        void bind(Step step) {
             mStepTextView.setText(step.getShortDescription());
         }
     }

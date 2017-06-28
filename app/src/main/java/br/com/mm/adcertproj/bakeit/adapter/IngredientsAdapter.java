@@ -28,15 +28,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     }
 
     // region PUBLIC METHODS
-    public void setIngredients(Ingredient[] ingredients) {
-        mIngredients = ingredients;
-        notifyDataSetChanged();
-    }
-
-    public Ingredient[] getIngredients() {
-        return mIngredients;
-    }
-
     @Override
     public IngredientsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -59,15 +50,15 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     // endregion PUBLIC METHODS
 
     // region AUXILIARY CLASSES
-    public class IngredientsViewHolder extends RecyclerView.ViewHolder {
+    class IngredientsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_ingredient) TextView mIngredientTextView;
 
-        public IngredientsViewHolder(View itemView) {
+        IngredientsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Ingredient ingredient) {
+        void bind(Ingredient ingredient) {
             mIngredientTextView.setText(StringHelper.buildIngredientString(mContext, ingredient));
         }
     }

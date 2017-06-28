@@ -50,7 +50,6 @@ public class DetailsFragment extends Fragment {
     private SimpleExoPlayer mExoPlayer;
     private MediaSource mediaSource;
     private OnClickListener callback;
-    private Step mRecipeStep;
     //endregion ATTRIBUTES
 
     /**

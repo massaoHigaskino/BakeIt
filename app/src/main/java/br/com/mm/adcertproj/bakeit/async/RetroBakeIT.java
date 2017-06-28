@@ -1,6 +1,7 @@
 package br.com.mm.adcertproj.bakeit.async;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
@@ -14,6 +15,7 @@ import br.com.mm.adcertproj.bakeit.model.Ingredient;
 import br.com.mm.adcertproj.bakeit.model.Recipe;
 import br.com.mm.adcertproj.bakeit.model.Step;
 import br.com.mm.adcertproj.bakeit.preferences.BakeITPreferences;
+import br.com.mm.adcertproj.bakeit.test.SimpleIdlingResource;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,13 +35,22 @@ import static br.com.mm.adcertproj.bakeit.provider.BakeITContentProvider.buildSt
 
 public class RetroBakeIT {
 
+    private static void setIdleState(SimpleIdlingResource idlingResource, boolean isIdleNow) {
+        if(idlingResource != null) {
+            idlingResource.setIdleState(isIdleNow);
+        }
+    }
     /**
      * Using retrofit it calls a remote api waiting for an update in json format. In case of an error
      * it fallbacks to the database stored content.
      * @param context Android context used to retrieve misc. data.
      * @param listener A listener to return a deserialized Recipes array.
      */
-    public static void runGetRecipesAsync(final Context context, final AsyncListener listener) {
+    public static void runGetRecipesAsync(final Context context, final AsyncListener listener,
+                                          @Nullable final SimpleIdlingResource idlingResource) {
+
+        setIdleState(idlingResource, false);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BakeITPreferences.BAKE_IT_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -70,7 +81,7 @@ public class RetroBakeIT {
                     public void onError(@NonNull Throwable e) {
                         Timber.e(e, "Failed to retrieve a new recipes.json." +
                                 " Falling back to database");
-                        fallbackGetRecipesAsync(context, listener);
+                        fallbackGetRecipesAsync(context, listener, idlingResource);
                     }
 
                     @Override
@@ -79,6 +90,8 @@ public class RetroBakeIT {
                         persistRecipesAsync(context, recipes);
                         AsyncTaskHelper.dismissProgressDialog();
                         listener.onTaskResult(recipes);
+
+                        setIdleState(idlingResource, true);
                     }
                 });
     }
@@ -88,7 +101,11 @@ public class RetroBakeIT {
      * @param context Android context used to retrieve misc. data.
      * @param listener A listener to return an array of Recipes from the database.
      */
-    public static void fallbackGetRecipesAsync(final Context context, final AsyncListener listener) {
+    private static void fallbackGetRecipesAsync(final Context context, final AsyncListener listener,
+                                               final SimpleIdlingResource idlingResource) {
+
+        setIdleState(idlingResource, false);
+
         Observable<Recipe[]> observable = Observable.fromCallable(new Callable<Recipe[]>() {
             @Override
             public Recipe[] call() throws Exception {
@@ -117,6 +134,8 @@ public class RetroBakeIT {
                         AsyncTaskHelper.dismissProgressDialog();
                         Toast.makeText(context, R.string.no_data,
                                 Toast.LENGTH_LONG).show();
+
+                        setIdleState(idlingResource, true);
                     }
 
                     @Override
@@ -131,11 +150,13 @@ public class RetroBakeIT {
                                     Toast.LENGTH_LONG).show();
                         }
                         listener.onTaskResult(recipes);
+
+                        setIdleState(idlingResource, true);
                     }
                 });
     }
 
-    public static void persistRecipesAsync(final Context context, final Recipe[] newRecipes) {
+    private static void persistRecipesAsync(final Context context, final Recipe[] newRecipes) {
         Observable observable = Observable.fromCallable(new Callable() {
             @Override
             public Object call() throws Exception {
@@ -175,7 +196,7 @@ public class RetroBakeIT {
     /**
      * Describes an remote RESTful API to Retrofit.
      */
-    public interface API {
+    interface API {
         @GET("{file}")
         Observable<Recipe[]> getRecipes(@Path("file") String filePath);
     }

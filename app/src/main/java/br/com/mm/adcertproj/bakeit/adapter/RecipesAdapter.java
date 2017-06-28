@@ -36,10 +36,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         notifyDataSetChanged();
     }
 
-    public Recipe[] getRecipes() {
-        return mRecipes;
-    }
-
     @Override
     public RecipesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -66,20 +62,18 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         void onRecipesClick(Recipe recipe);
     }
 
-    // TODO implementation pending
-    public class RecipesViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
+    class RecipesViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
         @BindView(R.id.tv_recipe_name) TextView mRecipeNameTextView;
         @BindView(R.id.iv_recipe) ImageView mRecipeImageView;
 
-        public RecipesViewHolder(View itemView) {
+        RecipesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            //itemView.setOnClickListener(this);
         }
 
         @OnClick(R.id.cv_recipe)
-        public void onClick(/*View v*/) {
+        void onClick() {
             int adapterPosition = getAdapterPosition();
             if(mClickListener != null && mRecipes != null
                     && mRecipes.length > adapterPosition && adapterPosition >= 0) {
@@ -87,7 +81,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
             }
         }
 
-        public void bind(Recipe recipe) {
+        void bind(Recipe recipe) {
             mRecipeNameTextView.setText(recipe.getName());
             if(StringHelper.isNullOrEmpty(recipe.getImage())){
                 mRecipeImageView.setVisibility(View.GONE);
