@@ -39,7 +39,7 @@ import timber.log.Timber;
 public class DetailsFragment extends Fragment {
 
     //region ATTRIBUTES
-    @BindView(R.id.tv_step) TextView mStepTextView;
+    @BindView(R.id.tv_step_name) TextView mStepTextView;
     @BindView(R.id.cv_exo_player) CardView mExoPlayerCardView;
     @BindView(R.id.baked_exo_player) SimpleExoPlayerView mExoPlayerView;
     @BindView(R.id.iv_step) ImageView mStepImageView;
@@ -175,8 +175,10 @@ public class DetailsFragment extends Fragment {
      * Release ExoPlayer.
      */
     private void releasePlayer() {
-        mExoPlayer.stop();
-        mExoPlayer.release();
+        if(mExoPlayer != null) {
+            mExoPlayer.stop();
+            mExoPlayer.release();
+        }
         mExoPlayer = null;
     }
 

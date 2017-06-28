@@ -66,7 +66,7 @@ public class RecipesActivityTest {
         onView(allOf(withId(R.id.tv_step),withText(RECIPE_STEP)))
                 .perform(scrollTo(), click());
 
-        onView(withId(R.id.tv_step))
+        onView(withId(R.id.tv_step_name))
                 .check(matches(withText(RECIPE_STEP)));
         onView(withId(R.id.tv_step_instructions))
                 .check(matches(withText(RECIPE_STEP_INSTRUCTIONS)));
@@ -82,7 +82,7 @@ public class RecipesActivityTest {
 
         onView(withId(R.id.button_next)).perform(scrollTo(), click());
 
-        onView(withId(R.id.tv_step))
+        onView(withId(R.id.tv_step_name))
                 .check(matches(withText(RECIPE_NEXT_STEP[RECIPE_INDEX])));
     }
 
