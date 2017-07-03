@@ -26,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static br.com.mm.adcertproj.bakeit.service.BakeITService.startActionUpdateWidget;
+
 public class RecipesActivity extends AppCompatActivity
         implements RecipesAdapter.RecipesClickListener, RetroBakeIT.AsyncListener {
 
@@ -84,6 +86,9 @@ public class RecipesActivity extends AppCompatActivity
         // This preference will be used by a widget in order to get the current recipe's ingredients
         getSharedPreferences(BuildConfig.PREFERENCE_FILE_KEY, MODE_PRIVATE).edit()
                 .putInt(BuildConfig.SHARED_RECIPE_KEY, recipe.getId()).apply();
+
+        // Starts an IntentService in order to update this app's widgets
+        startActionUpdateWidget(this);
 
         Intent intent = new Intent(this, BakeITActivity.class);
         intent.putExtra(BuildConfig.EXTRA_RECIPE_KEY, recipe);

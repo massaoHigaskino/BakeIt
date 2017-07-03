@@ -39,6 +39,8 @@
                 android:value=".activity.BakeITActivity" />
         </activity>
 
+        <service android:name=".service.BakeITService"/>
+
         <provider
             android:name=".provider.BakeITContentProvider"
             android:authorities="br.com.mm.adcertproj.bakeit"

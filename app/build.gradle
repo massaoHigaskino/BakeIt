@@ -19,6 +19,7 @@ android {
             buildConfigField 'String', 'EXO_PLAYER_USER_AGENT', '"br.com.mm.adcertproj.bakeit.useragent"'
             buildConfigField 'String', 'PREFERENCE_FILE_KEY', '"br.com.mm.adcertproj.bakeit.shared"'
             buildConfigField 'String', 'SHARED_RECIPE_KEY', '"br.com.mm.adcertproj.bakeit.shared.recipe"'
+            buildConfigField 'String', 'ACTION_UPDATE_WIDGET', '"br.com.mm.adcertproj.bakeit.action.updatewidget"'
         }
         release {
             minifyEnabled false
