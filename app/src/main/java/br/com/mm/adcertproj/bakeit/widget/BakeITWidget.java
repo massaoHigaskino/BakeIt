@@ -17,6 +17,13 @@ import static br.com.mm.adcertproj.bakeit.provider.BakeITContentProvider.buildRe
  */
 public class BakeITWidget extends AppWidgetProvider {
 
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                       int[] appWidgetIds) {
+        for(int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
+    }
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         final int recipeId =

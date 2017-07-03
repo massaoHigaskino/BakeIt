@@ -83,8 +83,8 @@ public class DetailsFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         releasePlayer();
     }
 
